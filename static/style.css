@@ -1,0 +1,58 @@
+/* 🎯 Skill Badge Styling */
+.skill-badge {
+    display: inline-block;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    font-size: 14px;
+}
+
+/* 🎨 Global Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* 📌 Headings */
+h2, h3 {
+    margin-bottom: 10px;
+}
+
+/* 💼 Card Design */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+/* 🔗 Hover Effects for Skill Links */
+.hover-link:hover {
+    background-color: #e2e6ea;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: underline;
+}
+
+/* 🧭 Navbar Styling */
+.navbar {
+    background-color: #ccb6b6 !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+    color: #007bff !important;
+    text-decoration: underline;
+}

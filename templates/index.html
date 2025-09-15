@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h2 class="mb-4">📄 Upload Your Resume</h2>
+
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="job_title" class="form-label">Select Job Title</label>
+            <select name="job_title" id="job_title" class="form-select" required>
+                <option value="">Choose job title</option>
+                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Full Stack Developer">Full Stack Developer</option>
+                <option value="Mobile App Developer">Mobile App Developer</option>
+                <option value="Database Administrator">Database Administrator</option>
+                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                <option value="DevOps Engineer">DevOps Engineer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="AI Engineer">AI Engineer</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="resume_file" class="form-label">Upload Resume (PDF)</label>
+            <input type="file" name="resume_file" id="resume_file" class="form-control" accept=".pdf" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">🔍 Analyze Resume</button>
+    </form>
+</div>
+{% endblock %}

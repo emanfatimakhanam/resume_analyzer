@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}About - Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-3">📄 About Resume Analyzer</h2>
+        <p>
+            Resume Analyzer is an intelligent tool that helps job seekers evaluate resumes efficiently using automated text extraction and matching.
+            This tool designed to help evaluate resumes against a predefined set of job roles. It evaluates how well your resume aligns with a chosen job position, highlights your <strong>matched skills</strong>, identifies <strong>skill gaps</strong>,
+            and provides guidance to strengthen your profile by providing hyperlinks to trusted sources.
+        </p>
+        <h4 class="mt-4">💡 Key Features:</h4>
+        <ul>
+            <li>Matches resume skills with industry-specific job requirements</li>
+            <li>Provides a compatibility score to assess your resume strength</li>
+            <li>Suggests missing skills and links to trusted learning platforms</li>
+            <li>Supports multiple job roles like Backend Developer, Data Scientist, AI Engineer, and more</li>
+        </ul>
+
+        <h4 class="mt-4">👨‍💻 Built With:</h4>
+        <ul>
+            <li>Python & Flask</li>
+            <li>Using database Sqlite3</li>
+            <li>Regex & Skill Matching Logic</li>
+        </ul>
+               <h4 class="mt-4">🎓 About the Developer</h4>
+        <p>
+          This project was developed by a Computer Science student to explore Python, Flask, and basic text analysis for practical, real world applications.
+          It demonstrates how resumes can be parsed and evaluated for specific roles in a simple and practical way.
+        </p>
+    </div>
+</div>
+{% endblock %}

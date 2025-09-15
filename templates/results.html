@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Result{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">🎯 Matched Job Titles</h2>
+
+{% for item in results %}
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">{{ item.job_title }}</h5>
+
+        <p class="mb-1"><strong>Matched Skills:</strong></p>
+        <div class="mb-3">
+            {% for skill in item.matched_skills %}
+                <span class="badge bg-secondary me-1">{{ skill.title() }}</span>
+            {% endfor %}
+        </div>
+
+        <p><strong>Score:</strong> {{ item.score }}%</p>
+
+        {% if item.score >= 80 %}
+        <div class="alert alert-success mt-3">
+            ✅ <strong>Excellent match!</strong> Your resume fits this role very well.
+        </div>
+
+        {% elif item.score >= 50 %}
+        <div class="alert alert-warning mt-3">
+            🌟 <strong>Good match.</strong> Consider adding the following to improve:
+            <div class="mt-2">
+                {% for skill in item.missing_skills_links %}
+                    {% if skill.link %}
+                                          <a href="{{ skill.link }}" target="_blank"
+   title="Click to learn {{ skill.name.title() }}"
+   class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
+   🔗 {{ skill.name.title() }}
+                        </a>
+                    {% else %}
+                        <span class="badge bg-light text-dark border me-1">{{ skill.name.title() }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% else %}
+        <div class="alert alert-danger mt-3">
+            ⚠️ <strong>Needs improvement.</strong> You're missing key skills:
+            <div class="mt-2">
+                {% for skill in item.missing_skills_links %}
+                    {% if skill.link %}
+                           
+                    <a href="{{ skill.link }}" target="_blank"
+   title="Click to learn {{ skill.name.title() }}"
+   class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
+   🔗 {{ skill.name.title() }}
+</a>
+                        </a>
+                    {% else %}
+                        <span class="badge bg-light text-dark border me-1">{{ skill.name.title() }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+<a href="/" class="btn btn-outline-primary">🔁 Try Another</a>
+{% endblock %}
