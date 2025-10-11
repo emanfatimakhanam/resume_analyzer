@@ -17,23 +17,25 @@
             {% endfor %}
         </div>
 
-        <p><strong>Score:</strong> {{ item.score }}%</p>
-
-        {% if item.score >= 80 %}
+        <!-- Show both scores -->
+        <p><strong>Exact Match:</strong> {{ item.match_percentage }}%</p>
+        <p><strong>Similarity Score (TF-IDF):</strong> {{ item.similarity_score }}%</p>
+        <p><strong>Final Score</strong> {{ item.final_score}}%</p>
+        {% if item.match_percentage >= 80 %}
         <div class="alert alert-success mt-3">
             ✅ <strong>Excellent match!</strong> Your resume fits this role very well.
         </div>
 
-        {% elif item.score >= 50 %}
+        {% elif item.match_percentage >= 50 %}
         <div class="alert alert-warning mt-3">
             🌟 <strong>Good match.</strong> Consider adding the following to improve:
             <div class="mt-2">
                 {% for skill in item.missing_skills_links %}
                     {% if skill.link %}
-                                          <a href="{{ skill.link }}" target="_blank"
-   title="Click to learn {{ skill.name.title() }}"
-   class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
-   🔗 {{ skill.name.title() }}
+                        <a href="{{ skill.link }}" target="_blank"
+                           title="Click to learn {{ skill.name.title() }}"
+                           class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
+                           🔗 {{ skill.name.title() }}
                         </a>
                     {% else %}
                         <span class="badge bg-light text-dark border me-1">{{ skill.name.title() }}</span>
@@ -48,12 +50,10 @@
             <div class="mt-2">
                 {% for skill in item.missing_skills_links %}
                     {% if skill.link %}
-                           
-                    <a href="{{ skill.link }}" target="_blank"
-   title="Click to learn {{ skill.name.title() }}"
-   class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
-   🔗 {{ skill.name.title() }}
-</a>
+                        <a href="{{ skill.link }}" target="_blank"
+                           title="Click to learn {{ skill.name.title() }}"
+                           class="badge bg-light text-dark border me-1 text-decoration-none hover-link">
+                           🔗 {{ skill.name.title() }}
                         </a>
                     {% else %}
                         <span class="badge bg-light text-dark border me-1">{{ skill.name.title() }}</span>

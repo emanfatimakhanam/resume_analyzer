@@ -8,11 +8,11 @@ from extractor import extract_fields
 load_dotenv()
 TESSERACT_PATH = os.getenv("TESSERACT_PATH")
 POPPLER_PATH = os.getenv("POPLER_PATH")
-import pytesseract #  it is python wrapper behind it google tesseract ocr engine in back ground is working
-pytesseract.pytesseract.tesseract_cmd =  TESSERACT_PATH
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH # is python wrapper behind it google tesseract ocr engine in back ground is working
 def preprocess_images(img):
         img = np.array(img)                          #Opencv takes as a numpy array 3d (height,width,color)
-        img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)           #color converted into grayscale standard fomula(height,width)
+        img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)  #color converted into grayscale standard fomula(height,width)
         blur = cv2.GaussianBlur(img,(3,3),0)        #Kernel size to change and calculate values of pixels
         _, thresh = cv2.threshold(blur,150,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)    #images are preprocess to reduce noise increase accuracy of extraction data
         clean_img = Image.fromarray(thresh)      #convert image into pil image
@@ -28,6 +28,7 @@ def ocr_scanned(path):
           print("full_text",full_text)
           list = extract_fields(full_text)
           resumes.append(list)
+          print(resumes)
           return resumes
     
 

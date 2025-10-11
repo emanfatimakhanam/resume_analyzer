@@ -1,0 +1,40 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment folders
+.env
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Flask specific
+instance/
+*.log
+
+# Virtual environment
+*.venv
+
+# Byte-compiled files
+*.bak
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyInstaller
+*.spec
+
+# Temporary files
+*.tmp
+
+# Git itself
+.gitignore
