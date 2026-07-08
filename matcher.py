@@ -30,9 +30,87 @@ dictionary = {
 }
 
 synonyms = {
+    # --- fixed: was "Postgresql" (capital P), which never matched since input is always lowercased first
+    "postgresql": "sql",
+    "postgres": "sql",
+    "mysql": "sql",
     "react.js": "react",
-    "Postgresql": "sql",
-    "jira software": "jira"
+    "reactjs": "react",
+    "vue.js": "vue",
+    "vuejs": "vue",
+    "node": "node.js",
+    "nodejs": "node.js",
+    "jira software": "jira",
+
+    # --- AI / ML / NLP phrasing gaps (based on your resume vs. job_skills_raw keywords)
+    "hugging face": "transformers",
+    "huggingface": "transformers",
+    "hugging face models": "transformers",
+    "transformer models": "transformers",
+    "large language models": "llms",
+    "llm": "llms",
+    "generative ai": "llms",
+    "gen ai": "llms",
+    "genai": "llms",
+    "text classification": "nlp",
+    "natural language processing": "nlp",
+    "cosine similarity": "nlp",
+    "tf-idf": "nlp",
+    "tf idf": "nlp",
+    "tfidf": "nlp",
+    "fuzzy matching": "nlp",
+    "image classification": "computer vision",
+    "object detection": "computer vision",
+    "cv": "computer vision",
+    "model fine-tuning": "model tuning",
+    "fine-tuning": "model tuning",
+    "fine tuning": "model tuning",
+    "hyperparameter tuning": "model tuning",
+    "chatbot": "chatbots",
+    "conversational ai": "chatbots",
+    "model deployment": "model deployment",
+    "mlops": "model deployment",
+    "cloud deployment": "model deployment",
+
+    # --- Data / stats phrasing gaps
+    "data viz": "data visualization",
+    "data visualisation": "data visualization",
+    "eda": "data analysis",
+    "exploratory data analysis": "data analysis",
+    "data cleaning": "data preprocessing",
+    "data wrangling": "data preprocessing",
+    "feature selection": "feature engineering",
+
+    # --- Web dev phrasing gaps
+    "restful apis": "apis",
+    "rest api": "apis",
+    "rest apis": "apis",
+    "api development": "apis",
+    "responsive web design": "responsive design",
+    "authentication and authorization": "authentication",
+    "auth": "authentication",
+    "unit tests": "unit testing",
+    "testing": "unit testing",
+
+    # --- DevOps / cloud phrasing gaps
+    "continuous integration": "ci/cd",
+    "continuous deployment": "ci/cd",
+    "ci cd": "ci/cd",
+    "amazon web services": "aws",
+    "microsoft azure": "azure",
+    "shell scripting": "bash scripting",
+    "shell script": "bash scripting",
+    "containerization": "docker",
+
+    # --- Mobile phrasing gaps
+    "react-native": "react native",
+    "ui/ux design": "ui design",
+
+    # --- Security phrasing gaps
+    "pentesting": "penetration testing",
+    "pen testing": "penetration testing",
+    "vulnerability assessment": "penetration testing",
+    "security information and event management": "siem",
 }
 
 # --------------------------
@@ -78,10 +156,17 @@ def match_resume_skills(resume_skills, job_skills):
                 matched.add(close_match[0])
 
     # Step 2: TF-IDF similarity
-    vectorizer = TfidfVectorizer()
-    documents = [" ".join(resume_skills), " ".join(job_skills)]
-    tfidf_matrix = vectorizer.fit_transform(documents)
-    similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
+    # Guard against empty skill lists — TF-IDF crashes if there's nothing to compare
+    if not resume_skills or not job_skills:
+        similarity = 0
+    else:
+        vectorizer = TfidfVectorizer()
+        documents = [" ".join(resume_skills), " ".join(job_skills)]
+        try:
+            tfidf_matrix = vectorizer.fit_transform(documents)
+            similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
+        except ValueError:
+            similarity = 0
 
     # Step 3: Scores
     match_percentage = round((len(matched) / len(job_skills)) * 100, 2) if job_skills else 0
@@ -188,5 +273,4 @@ def run_matching(resume_skills, selected_job):
             "final_score": final_score
         })
 
-    print(result)
     return result

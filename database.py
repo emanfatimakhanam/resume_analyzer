@@ -53,7 +53,10 @@ def cleaning_format(people):
         else:
             experience = 0
         phone = item.get("Phone", [""])[0] if item.get("Phone") else ""
-        email = item.get("Email", [""])[0] if item.get("Email") else ""
+
+        email = item.get("Email", "")
+        if isinstance(email, list):
+            email = email[0] if email else ""
 
         cleaned.append({
             "Name": name,
@@ -74,7 +77,7 @@ def insert_resumes(cursor,person):
         ", ".join(person["Skills"]),
         person["Experience"],
         person["Phone"],
-        person["Email"] if isinstance(person["Email"], str) else person["Email"][0]
+        person["Email"]  # already normalized to a string in cleaning_format
     ))
 
 # Function to clean all and insert all
@@ -85,4 +88,3 @@ def insert_all(all_resumes):
         for person in cleaned:
             insert_resumes(cursor, person)
         conn.commit()
-

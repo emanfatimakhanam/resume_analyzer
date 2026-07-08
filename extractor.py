@@ -1,3 +1,4 @@
+
 import re
 import spacy
 from spacy.matcher import PhraseMatcher
@@ -15,6 +16,15 @@ def extract_name(full_text):
     for ent in doc.ents:
         if ent.label_ == "PERSON":
             return ent.text
+    # Fallback: if spaCy can't find a name, assume it's the first line of the resume
+    # (this is where names almost always appear)
+    lines = [line.strip() for line in full_text.strip().split("\n") if line.strip()]
+    if lines:
+        first_line = lines[0]
+        # a real name is usually short (1-4 words) and doesn't contain @ or numbers
+        word_count = len(first_line.split())
+        if 1 <= word_count <= 4 and "@" not in first_line and not any(ch.isdigit() for ch in first_line):
+            return first_line
     return ""
 
 skill_keywords = [
@@ -41,12 +51,20 @@ def extract_skills(full_text):
     return list(set(found))
 
 def extract_experience(full_text):
-    doc = nlp(full_text)
     experience = []
+
+    # Catch date ranges like "2021 - 2023", "Jan 2021 - Present", "2020-2024"
+    date_range_pattern = r"(?:[A-Za-z]{3,9}\.?\s)?\d{4}\s*[-–—to]+\s*(?:[A-Za-z]{3,9}\.?\s)?(?:\d{4}|Present|present|Current|current)"
+    date_ranges = re.findall(date_range_pattern, full_text)
+    experience.extend(date_ranges)
+
+    # Also keep catching phrases like "5 years of experience"
+    doc = nlp(full_text)
     for ent in doc.ents:
         if ent.label_ in ["DATE", "TIME", "QUANTITY"]:
             if "year" in ent.text.lower():
                 experience.append(ent.text)
+
     return experience
 
 def extract_fields(full_text):
