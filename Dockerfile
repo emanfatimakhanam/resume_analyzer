@@ -22,6 +22,4 @@ COPY . .
 ENV TESSERACT_PATH=/usr/bin/tesseract
 ENV POPPLER_PATH=/usr/bin
 
-EXPOSE 5000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD gunicorn --bind 0.0.0.0:$PORT app:app

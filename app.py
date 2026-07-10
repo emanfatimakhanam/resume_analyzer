@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from pipeline import process_file_text
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = "/tmp/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg"}
@@ -34,13 +34,11 @@ def analyze():
 
     if not allowed_file(file.filename):
         return "Unsupported file type. Please upload a PDF, PNG, or JPG.", 400
-
     # secure + unique filename to prevent path traversal and collisions
     filename = secure_filename(file.filename)
     unique_name = f"{uuid.uuid4().hex}_{filename}"
     filepath = os.path.join(UPLOAD_FOLDER, unique_name)
     file.save(filepath)
-
     try:
         results = process_file_text(filepath, selected_job)
     except Exception as e:

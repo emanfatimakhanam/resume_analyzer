@@ -5,7 +5,6 @@ from extractor import extract_fields
 
 load_dotenv()
 OCR_API_KEY = os.getenv('OCR_SPACE_API_KEY')
-print("DEBUG OCR KEY:", OCR_API_KEY) 
 OCR_API_URL = "https://api.ocr.space/parse/image"
 
 
@@ -29,7 +28,7 @@ def ocr_scanned(path):
         )
 
     result = response.json()
-    print("DEBUG OCR RESPONSE:", result) 
+   
 
     if result.get("IsErroredOnProcessing"):
         error_msg = result.get("ErrorMessage", ["OCR failed"])
